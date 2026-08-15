@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  test:
+  pipeline-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del código
