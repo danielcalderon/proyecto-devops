@@ -245,6 +245,8 @@ Inicia GitHub Actions
         ↓
 Instala Java
         ↓
+Análisis estático
+        ↓
 Ejecuta Maven Test
         ↓
 Publica resultados

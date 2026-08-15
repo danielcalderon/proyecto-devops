@@ -13,7 +13,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
+      - name: Checkout del código
         uses: actions/checkout@v4
 
       - name: Setup Java 21
@@ -23,13 +23,16 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Grant execute permission to Maven Wrapper
+      - name: Grant permisos de ejecución al Maven Wrapper
         run: chmod +x mvnw
+
+      - name: Análisis estático del código
+        run: ./mvnw checkstyle:check
 
       - name: Run unit tests
         run: ./mvnw test
 
-      - name: Upload test reports
+      - name: Upload reporte de tests
         if: always()
         uses: actions/upload-artifact@v4
         with:
