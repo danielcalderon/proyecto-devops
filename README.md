@@ -239,7 +239,7 @@ Los resultados de los tests se almacenan como artefactos del workflow y pueden d
 ### Ejemplo de flujo de trabajo en Github
 
 ```text
-Push recibido
+Push / Pull Request recibido
         ↓
 Inicia GitHub Actions
         ↓
@@ -251,23 +251,7 @@ Ejecuta Maven Test
         ↓
 Publica resultados
         ↓
-Marca la ejecución como OK o ERROR
+Marca la ejecución como OK ✅ o ERROR ❌
 ```
 
 ---
-
-### Resultado esperado
-
-Si todos los tests finalizan correctamente:
-
-```text
-✅ Workflow successful
-```
-
-Si algún test falla:
-
-```text
-❌ Workflow failed
-```
-
-GitHub marcará el commit o Pull Request como fallido.
