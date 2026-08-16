@@ -2,15 +2,26 @@ pipeline {
 
     agent any
 
-    environment*{
+    environment {
         IMAGE_NAME = 'ghcr.io/danielcalderon/proyecto-devops'
+        REPOSITORY_URL = 'https://github.com/danielcalderon/proyecto-devops.git'
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/danielcalderon/proyecto-devops.git'
+                git(
+                    url: REPOSITORY_URL,
+                    branch: 'main',
+                    credentialsId: 'github-credentials'
+                )
+            }
+        }
+
+        stage('Prepare') {
+            steps {
+                sh 'chmod +x mvnw'
             }
         }
 
@@ -36,14 +47,14 @@ pipeline {
             steps {
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'dockerhub-credentials',
-                        usernameVariable: 'DOCKER_USERNAME',
-                        passwordVariable: 'DOCKER_PASSWORD'
+                        credentialsId: 'github-registry-credentials',
+                        usernameVariable: 'GITHUB_USERNAME',
+                        passwordVariable: 'GITHUB_TOKEN'
                     )
                 ]) {
                     sh '''
-                        echo "$DOCKER_PASSWORD" | docker login \
-                            -u "$DOCKER_USERNAME" \
+                        echo "$GITHUB_TOKEN" | docker login ghcr.io \
+                            -u "$GITHUB_USERNAME" \
                             --password-stdin
                         docker push ${IMAGE_NAME}:latest
                         docker logout

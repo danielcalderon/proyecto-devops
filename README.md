@@ -255,3 +255,107 @@ Marca la ejecución como OK ✅ o ERROR ❌
 ```
 
 ---
+
+## Flujo de Entrega Continua (CD)
+
+Este proyecto utiliza Jenkins para automatizar el proceso de construcción y publicación de imágenes Docker en GitHub Container Registry.
+
+---
+
+### Jenkinsfile
+
+La definición de la pipeline se encuentra en el archivo:
+
+```text
+Jenkinsfile
+```
+
+---
+
+### Etapas de la pipeline
+
+#### 1. Checkout
+
+Obtiene el código fuente desde GitHub.
+
+```groovy
+git 'https://github.com/danielcalderon/proyecto-devops.git'
+```
+
+#### 2. Prepare
+
+Concede permisos de ejecución al Maven Wrapper.
+
+```groovy
+chmod +x mvnw
+```
+
+#### 3. Build
+
+Compila la aplicación y genera el artefacto JAR.
+
+```groovy
+./mvnw clean package
+```
+
+#### 4. Test
+
+Ejecuta la batería de pruebas automatizadas.
+
+```groovy
+./mvnw test
+```
+
+#### 5. Docker Build
+
+Construye la imagen Docker de la aplicación.
+
+```groovy
+docker build -t ${IMAGE_NAME}:latest .
+```
+
+Utiliza el Dockerfile ubicado en la raíz del proyecto.
+
+#### 6. Docker Push
+
+Publica la imagen en GitHub Container Registry.
+
+---
+
+### Ejemplo de ejecución completa
+
+```text
+Developer
+    ↓
+Push a GitHub
+    ↓
+Jenkins Pipeline
+    ↓
+Checkout
+    ↓
+Build
+    ↓
+Tests
+    ↓
+Docker Build
+    ↓
+Docker Push
+    ↓
+Imagen publicada en GHCR
+```
+
+---
+
+### Resultado esperado
+
+Si todas las etapas se completan correctamente:
+
+```text
+✅ Pipeline successful
+```
+
+y la imagen queda publicada en:
+
+```text
+ghcr.io/danielcalderon/proyecto-devops:latest
+```
