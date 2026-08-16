@@ -359,3 +359,4 @@ y la imagen queda publicada en:
 ```text
 ghcr.io/danielcalderon/proyecto-devops:latest
 ```
+
