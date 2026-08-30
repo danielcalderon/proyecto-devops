@@ -34,12 +34,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw sonar:sonar -Dsonar.token=$SONAR_TOKEN
 
-      - name: Scan de vulnerabilidades
-        uses: snyk/actions/maven-3-jdk-21@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          JAVA_HOME: ${{ env.JAVA_HOME }}
-
       - name: Run unit tests
         run: ./mvnw test
 
@@ -49,3 +43,12 @@ jobs:
         with:
           name: test-reports
           path: target/surefire-reports/
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven-3-jdk-21@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
