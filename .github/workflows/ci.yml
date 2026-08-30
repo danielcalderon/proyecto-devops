@@ -29,6 +29,11 @@ jobs:
       - name: Análisis estático del código
         run: ./mvnw checkstyle:check
 
+      - name: Análisis de calidad del código
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw sonar:sonar -Dsonar.token=$SONAR_TOKEN
+
       - name: Run unit tests
         run: ./mvnw test
 
