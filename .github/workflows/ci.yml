@@ -34,6 +34,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw sonar:sonar -Dsonar.token=$SONAR_TOKEN
 
+      - name: Scan de vulnerabilidades
+          uses: snyk/actions/maven@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Run unit tests
         run: ./mvnw test
 
