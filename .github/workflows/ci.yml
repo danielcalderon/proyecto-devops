@@ -34,12 +34,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./mvnw sonar:sonar -Dsonar.token=$SONAR_TOKEN
 
-      - name: Debug Java
-        run: |
-          java -version
-          echo $JAVA_HOME
-          which java
-          ./mvnw -version
+      - name: Instalar Snyk CLI
+        uses: snyk/actions/setup@master
 
       - name: Scan de vulnerabilidades
         uses: snyk/actions/maven-3-jdk-21@master
