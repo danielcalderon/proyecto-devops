@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: proyecto-devops-app
+  namespace: proyecto-devops
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: proyecto-devops-app
+
+  template:
+    metadata:
+      labels:
+        app: proyecto-devops-app
+
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: proyecto-devops-app
+          image: ghcr.io/danielcalderon/proyecto-devops:latest
+          ports:
+            - containerPort: 8080
