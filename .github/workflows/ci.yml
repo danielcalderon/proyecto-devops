@@ -48,9 +48,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+
+      - name: Instalar Snyk CLI
+        uses: snyk/actions/setup@master
+
       - name: Run Snyk to check for vulnerabilities
         continue-on-error: true
-        uses: snyk/actions/maven-3-jdk-21@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: snyk test --sarif-file-output=snyk.sarif
